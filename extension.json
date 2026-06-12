@@ -1,0 +1,5 @@
+{
+  "displayName": "Directory Sync",
+  "defaultColor": "#f59e0b",
+  "description": "One-way mirrors between directories on your machines: each pair scans its source on an interval (or on demand) and copies changes to the target, deleting target files the source no longer has."
+}

@@ -1,0 +1,214 @@
+/* Directory Sync extension. Uses the host CSS-variable tokens + button
+   system, which cascade into extension bundles. */
+
+.dirsync-view {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.dirsync-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.dirsync-header-main { min-width: 0; }
+.dirsync-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+.dirsync-subtitle {
+  margin-top: 4px;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
+.dirsync-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.dirsync-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Pair card */
+.dirsync-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.dirsync-card.is-disabled .dirsync-endpoints { opacity: 0.55; }
+
+.dirsync-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+}
+.dirsync-endpoints {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 12.5px;
+}
+.dirsync-machine {
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.dirsync-machine::after { content: ':'; color: var(--text-secondary); font-weight: 400; }
+.dirsync-path {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.dirsync-arrow {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.dirsync-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.dirsync-enable {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+  margin-left: 2px;
+}
+.dirsync-enable input { margin: 0; accent-color: var(--accent); }
+.dirsync-delete {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1;
+  padding: 2px 5px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.dirsync-delete:hover { color: var(--danger, #ef4444); background: rgba(239, 68, 68, 0.1); }
+
+/* Status line */
+.dirsync-status-line {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  min-width: 0;
+}
+.dirsync-status-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dirsync-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--text-secondary);
+  opacity: 0.5;
+}
+.dirsync-dot.is-ok { background: #22c55e; opacity: 1; }
+.dirsync-dot.is-busy {
+  background: var(--accent);
+  opacity: 1;
+  animation: dirsync-pulse 1.2s ease-in-out infinite;
+}
+.dirsync-dot.is-error { background: var(--danger, #ef4444); opacity: 1; }
+.dirsync-dot.is-off { background: var(--text-secondary); opacity: 0.35; }
+.dirsync-dot.is-idle { background: var(--text-secondary); opacity: 0.5; }
+@keyframes dirsync-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.dirsync-error {
+  font-size: 11.5px;
+  color: var(--danger, #ef4444);
+  overflow-wrap: anywhere;
+}
+
+.dirsync-warnings { font-size: 11.5px; color: var(--text-secondary); }
+.dirsync-warnings summary { cursor: pointer; color: #f59e0b; }
+.dirsync-warnings ul {
+  margin: 4px 0 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Sidebar */
+.dirsync-sidebar {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 0;
+}
+.dirsync-sidebar-empty {
+  padding: 10px 12px;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
+.dirsync-sidebar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 5px 12px;
+  cursor: pointer;
+  min-width: 0;
+}
+.dirsync-sidebar-item:hover { background: var(--bg-secondary); }
+.dirsync-sidebar-item.is-disabled .dirsync-sidebar-route { opacity: 0.55; }
+.dirsync-sidebar-route {
+  font-size: 12.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dirsync-sidebar-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
