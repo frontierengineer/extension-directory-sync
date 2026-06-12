@@ -1,0 +1,17 @@
+{
+  "//": "Compiler SETTINGS for the host-side halves (here: server/ + worker/). Mirrors the host's backend tsconfig: lib ES2022 + DOM (the vendored contract carries `/// <reference lib=\"dom\" />`), node types for fs/os/crypto/path, strict. The ui/ half has its own ui/tsconfig.json. This file does NOT typecheck directly — source imports `../../types`, a path that in a flat standalone repo points above the repo root (in production the extension is nested one dir deeper). `npm run verify` reproduces the production nesting in a temp mirror and runs tsc from there. See README → 'How types resolve'.",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": ["ES2022", "DOM"],
+    "types": ["node"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "noEmit": true
+  },
+  "include": ["server/**/*.ts", "worker/**/*.ts", "mcp/**/*.ts", "hooks/**/*.ts"]
+}
