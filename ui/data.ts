@@ -22,15 +22,15 @@ export interface DirSyncClient {
 export function createClient(bus: Bus): DirSyncClient {
   return {
     async list() {
-      const r = await bus.extension.request<{ pairs: PairWithStatus[] }>('pairs.list', {});
+      const r = await bus.application.request<{ pairs: PairWithStatus[] }>('pairs.list', {});
       return r?.pairs || [];
     },
-    create: (input) => bus.extension.request('pairs.create', input),
-    update: (id, input) => bus.extension.request('pairs.update', { id, ...input }),
-    setEnabled: (id, enabled) => bus.extension.request('pairs.set_enabled', { id, enabled }),
-    remove: (id) => bus.extension.request('pairs.delete', { id }),
-    syncNow: (id) => bus.extension.request('pairs.sync_now', { id }),
-    onChanged: (handler) => bus.extension.subscribe('pairs.changed', handler),
+    create: (input) => bus.application.request('pairs.create', input),
+    update: (id, input) => bus.application.request('pairs.update', { id, ...input }),
+    setEnabled: (id, enabled) => bus.application.request('pairs.set_enabled', { id, enabled }),
+    remove: (id) => bus.application.request('pairs.delete', { id }),
+    syncNow: (id) => bus.application.request('pairs.sync_now', { id }),
+    onChanged: (handler) => bus.application.subscribe('pairs.changed', handler),
   };
 }
 

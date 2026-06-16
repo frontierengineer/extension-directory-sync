@@ -21,4 +21,4 @@ Directory Sync keeps a directory on one of your machines copied onto another, au
 
 ## Install
 
-Install Directory Sync from the **Extensions → Marketplace** tab in Frontier: find Directory Sync, click Install, and approve the access it asks for (it reads and writes files on your machines to do the mirroring). Frontier verifies the download before installing. Once it's in, the Directory Sync sidebar appears — create a pair to start mirroring.
+Install Directory Sync from the **Applications → Marketplace** tab in Frontier: find Directory Sync, click Install, and approve the access it asks for (it reads and writes files on your machines to do the mirroring). Frontier verifies the download before installing. Once it's in, the Directory Sync sidebar appears — create a pair to start mirroring.

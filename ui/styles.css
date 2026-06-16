@@ -1,5 +1,5 @@
-/* Directory Sync extension. Uses the host CSS-variable tokens + button
-   system, which cascade into extension bundles. */
+/* Directory Sync application. Uses the host CSS-variable tokens + button
+   system, which cascade into application bundles. */
 
 .dirsync-view {
   display: flex;
@@ -178,7 +178,7 @@
 /* Sidebar */
 /* ── App shell (shell-v2) ─────────────────────────────────────────────
    The Directory Sync app owns its whole content rect: a left rail (the pairs
-   list) and a main pane (the dashboard), composed with the app-kit Split. */
+   list) and a main pane (the dashboard), composed with the application-kit Split. */
 .dirsync-app {
   height: 100%;
   width: 100%;

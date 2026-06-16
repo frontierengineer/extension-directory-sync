@@ -1,4 +1,4 @@
-// Shared types for the dir-sync extension's bus surface (server ↔ ui) and
+// Shared types for the dir-sync application's bus surface (server ↔ ui) and
 // the pair model both halves render. The worker-channel wire protocol lives
 // in worker/index.ts (its implementation) and server/index.ts (its driver).
 
@@ -45,7 +45,7 @@ export interface PairWithStatus extends SyncPair {
   running: boolean;
 }
 
-// Bus surface (extension channel `pairs.*`):
+// Bus surface (application channel `pairs.*`):
 //   request  pairs.list                                  → { pairs: PairWithStatus[] }
 //   request  pairs.create  { source, target, intervalMs?, exclusions? } → { pair } | { error }
 //   request  pairs.update  { id, source?, target?, intervalMs?, exclusions? } → { pair } | { error }

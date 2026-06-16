@@ -1,7 +1,7 @@
-// The dir-sync host backend: owns the pair model (extension Store), schedules
+// The dir-sync host backend: owns the pair model (application Store), schedules
 // runs, and drives the worker-channel protocol that moves bytes. The host never
 // touches the files itself — both endpoints' filesystem work happens in this
-// extension's worker component (worker/index.ts); a cross-machine pair relays
+// application's worker component (worker/index.ts); a cross-machine pair relays
 // source → host → target in acked 256KB chunks, a same-machine pair
 // short-circuits to one local mirror op on that machine's worker.
 
@@ -206,7 +206,7 @@ export function register(serverProvider: ServerProvider): void {
 
   const publishTimers = new Map<string, NodeJS.Timeout>();
   function publishChanged(id: string): void {
-    bus.extension.publish('pairs.changed', { id });
+    bus.application.publish('pairs.changed', { id });
   }
   // Mid-run counter updates coalesce to at most ~2 publishes a second.
   function publishThrottled(id: string): void {
@@ -494,16 +494,16 @@ export function register(serverProvider: ServerProvider): void {
     }
   }
 
-  // ── Bus responders (this extension's UI) ──────────────────────────
+  // ── Bus responders (this application's UI) ────────────────────────
 
-  bus.extension.respond('pairs.list', async (): Promise<{ pairs: PairWithStatus[] }> => {
+  bus.application.respond('pairs.list', async (): Promise<{ pairs: PairWithStatus[] }> => {
     const list = Array.from(pairs.values())
       .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
       .map((pair) => ({ ...pair, status: statusFor(pair.id), running: running.has(pair.id) }));
     return { pairs: list };
   });
 
-  bus.extension.respond('pairs.create', async (params: any) => {
+  bus.application.respond('pairs.create', async (params: any) => {
     const source = parseEndpoint(params?.source);
     if ('error' in source) return { error: `source: ${source.error}` };
     const target = parseEndpoint(params?.target);
@@ -528,7 +528,7 @@ export function register(serverProvider: ServerProvider): void {
     return { pair };
   });
 
-  bus.extension.respond('pairs.update', async (params: any) => {
+  bus.application.respond('pairs.update', async (params: any) => {
     const pair = pairs.get(String(params?.id || ''));
     if (!pair) return { error: 'unknown pair' };
     if (running.has(pair.id)) return { error: 'this pair is mid-sync — wait for the run to finish' };
@@ -548,7 +548,7 @@ export function register(serverProvider: ServerProvider): void {
     return { pair };
   });
 
-  bus.extension.respond('pairs.set_enabled', async (params: any) => {
+  bus.application.respond('pairs.set_enabled', async (params: any) => {
     const pair = pairs.get(String(params?.id || ''));
     if (!pair) return { error: 'unknown pair' };
     pair.enabled = params?.enabled === true;
@@ -558,7 +558,7 @@ export function register(serverProvider: ServerProvider): void {
     return { ok: true };
   });
 
-  bus.extension.respond('pairs.delete', async (params: any) => {
+  bus.application.respond('pairs.delete', async (params: any) => {
     const id = String(params?.id || '');
     const pair = pairs.get(id);
     if (!pair) return { error: 'unknown pair' };
@@ -572,7 +572,7 @@ export function register(serverProvider: ServerProvider): void {
     return { ok: true };
   });
 
-  bus.extension.respond('pairs.sync_now', async (params: any) => {
+  bus.application.respond('pairs.sync_now', async (params: any) => {
     const id = String(params?.id || '');
     if (!pairs.has(id)) return { error: 'unknown pair' };
     if (running.has(id)) return { error: 'a sync is already in progress for this pair' };
@@ -594,7 +594,7 @@ export function register(serverProvider: ServerProvider): void {
     for (const [reqId, p] of Array.from(pending.entries())) {
       clearTimeout(p.timer);
       pending.delete(reqId);
-      p.reject(new FatalSyncError('extension unloading'));
+      p.reject(new FatalSyncError('application unloading'));
     }
   });
 }

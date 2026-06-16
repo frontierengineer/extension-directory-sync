@@ -1,5 +1,5 @@
 {
-  "name": "extension-dir-sync-ui",
+  "name": "application-dir-sync-ui",
   "private": true,
   "dependencies": {
     "react": "^18.0.0",
