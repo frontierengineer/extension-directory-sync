@@ -8,7 +8,7 @@ import { DirSyncSidebar } from './components/DirSyncSidebar';
 import './styles.css';
 
 // ─────────────────────────────────────────────────────────────────────
-// The Directory Sync app (shell-v2). ONE ui.extension.register that owns the
+// The Directory Sync app (shell-v2). ONE ui.application.register that owns the
 // whole content rect: a left rail listing the sync pairs (with a New Sync Pair
 // action) and a main pane holding the single dashboard view of all pairs. There
 // is no host tab bar and no host sidebar badge — every row drives the one
@@ -73,7 +73,7 @@ export function register(uiProvider: UiProvider): void {
 
   // ONE app per extension — the whole directory-sync experience lives in here.
   let root: ReturnType<typeof createRoot> | null = null;
-  ui.extension.register({
+  ui.application.register({
     id: 'dir-sync',
     title: 'Directory Sync',
     // Two folders with a sync arrow between them.
